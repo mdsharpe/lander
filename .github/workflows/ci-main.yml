@@ -1,0 +1,13 @@
+name: Deploy web app to Azure Static Web Apps
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/composite/build
