@@ -1,5 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Bodies, Composite, Engine, World, Body } from 'matter-js';
+import {
+    Bodies,
+    Composite,
+    Engine,
+    World,
+    Body,
+    Vertices,
+    Svg,
+} from 'matter-js';
 
 @Injectable()
 export class GameState implements OnDestroy {
@@ -7,36 +15,48 @@ export class GameState implements OnDestroy {
 
     private _terrain: any;
 
-    public init(): void {
-        this._terrain = this.createTerrain();
+    public async init(): Promise<void> {
+        this._terrain = await this.createTerrain();
 
         World.add(this.engine.world, this._terrain);
-
-        var boxA = Bodies.rectangle(400, 200, 80, 80);
-        var boxB = Bodies.rectangle(450, 50, 80, 80);
-        var ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
-
-        // add all of the bodies to the world
-        Composite.add(this.engine.world, [boxA, boxB, ground]);
     }
 
     public ngOnDestroy(): void {}
 
-    private createTerrain(): Body {
-        return Bodies.fromVertices(
+    private async createTerrain(): Promise<Body> {
+        const svg = await this.loadSvg('assets/terrain.svg');
+
+        var vertexSets = Array.from(svg.querySelectorAll('path')).map((path) =>
+            Svg.pathToVertices(path, 15)
+        );
+
+        var terrain = Bodies.fromVertices(
             0,
             0,
-            [
-                [
-                    { x: 0, y: 0 },
-                    { x: 100, y: 100 },
-                    { x: 0, y: 100 },
-                ],
-            ],
+            vertexSets,
             {
                 isStatic: true,
-                frictionStatic: 1,
-            }
+                render: {
+                    fillStyle: '#894036',
+                    lineWidth: 0
+                },
+            },
+            true
         );
+
+        Body.scale(terrain, 5, 5);
+
+        Body.translate(terrain, {
+            x: (terrain.bounds.max.x - terrain.bounds.min.x) / 2,
+            y: (terrain.bounds.max.y - terrain.bounds.min.y) / 2,
+        });
+
+        return terrain;
+    }
+
+    private async loadSvg(url: string): Promise<Document> {
+        const response = await fetch(url, { cache: 'no-store' });
+        const raw = await response.text();
+        return new window.DOMParser().parseFromString(raw, 'image/svg+xml');
     }
 }

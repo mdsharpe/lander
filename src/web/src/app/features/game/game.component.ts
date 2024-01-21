@@ -5,7 +5,7 @@ import {
     OnInit,
     ViewChild,
 } from '@angular/core';
-import { Render, Runner } from 'matter-js';
+import { Bounds, Render, Runner } from 'matter-js';
 import { GameState } from './game-state';
 
 @Component({
@@ -25,8 +25,7 @@ export class GameComponent implements OnInit {
     private _worldContainer: ElementRef<HTMLElement> | null = null;
 
     public ngOnInit(): void {
-        this._state.init();
-        this.setUpRender();
+        this._state.init().then(() => this.setUpRender());
     }
 
     @HostListener('window:resize', ['$event'])
@@ -55,21 +54,15 @@ export class GameComponent implements OnInit {
             element: container,
             engine: this._state.engine,
             options: {
-                showAngleIndicator: true,
-                showVelocity: true,
-                showCollisions: true,
-                hasBounds: true,
                 width: container.clientWidth,
                 height: container.clientHeight,
+                wireframes: false
             },
         });
 
         Render.run(this._render);
 
-        // create runner
         var runner = Runner.create();
-
-        // run the engine
         Runner.run(runner, this._state.engine);
     }
 }

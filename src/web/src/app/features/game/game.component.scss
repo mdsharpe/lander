@@ -1,4 +1,4 @@
 .world-container {
-    width: 80vw;
-    height: 80vh;
+    width: calc(100vw - 75px);
+    height: calc(100vh - 75px);
 }
