@@ -1,7 +1,8 @@
-name: "Build"
+name: "Build Angular app"
 
 runs:
   using: "composite"
+
   steps:
     - uses: actions/setup-node@v4
       with:
@@ -17,7 +18,7 @@ runs:
       working-directory: ./src/web
       run: npm run build -- --configuration production
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: WebApp
         path: ./src/web/dist/lander

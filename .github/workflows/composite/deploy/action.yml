@@ -1,19 +1,20 @@
-name: "Deploy"
+name: "Deploy artifact to SWA"
 
 inputs:
-  AZURE_STATIC_WEB_APPS_API_TOKEN:
-    required: true
   REPO_TOKEN:
     required: true
 
 runs:
   using: "composite"
+
+  steps:
     - uses: actions/download-artifact@v4
       with:
         name: WebApp
+
     - uses: Azure/static-web-apps-deploy@v1
       with:
-        azure_static_web_apps_api_token: ${{ inputs.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+        azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
         repo_token: ${{ inputs.REPO_TOKEN }}
         action: "upload"
         skip_app_build: true
