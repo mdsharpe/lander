@@ -1,11 +1,4 @@
 name: "Build"
-description: "Builds Angular app, then uploads the artifact to the workflow run"
-
-inputs:
-  NODE_VERSION:
-    description: "The version of Node.js to use"
-    type: string
-    required: true
 
 runs:
   using: "composite"
