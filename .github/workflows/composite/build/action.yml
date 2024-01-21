@@ -21,4 +21,4 @@ runs:
     - uses: actions/upload-artifact@v4
       with:
         name: WebApp
-        path: ./src/web/dist/lander
+        path: ./src/web/dist/lander/browser
