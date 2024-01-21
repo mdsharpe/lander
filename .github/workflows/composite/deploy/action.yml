@@ -25,4 +25,5 @@ runs:
         action: "upload"
         skip_app_build: true
         skip_api_build: true
-        output_location: $ARTIFACT_TO_UPLOAD_PATH
+        output_location: ''
+        app_location: $ARTIFACT_TO_UPLOAD_PATH
