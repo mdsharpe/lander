@@ -18,7 +18,12 @@ runs:
       working-directory: ./src/web
       run: npm run build -- --configuration production
 
+    - name: Copy SWA config
+      shell: pwsh
+      working-directory: ./src/web
+      run: cp ./staticwebapp.config.json ./src/web/dist/lander
+
     - uses: actions/upload-artifact@v4
       with:
         name: WebApp
-        path: ./src/web/dist/lander/browser
+        path: ./src/web/dist/lander

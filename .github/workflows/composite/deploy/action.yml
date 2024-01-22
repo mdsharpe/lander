@@ -23,4 +23,5 @@ runs:
         skip_app_build: true
         skip_api_build: true
         output_location: ''
-        app_location: $GITHUB_WORKSPACE/artifact-to-upload
+        app_location: $GITHUB_WORKSPACE/artifact-to-upload/browser
+        config_file_location: $GITHUB_WORKSPACE/artifact-to-upload
