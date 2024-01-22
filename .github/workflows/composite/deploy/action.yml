@@ -4,7 +4,7 @@ inputs:
   AZURE_STATIC_WEB_APPS_API_TOKEN:
     required: true
   REPO_TOKEN:
-    required: 
+    required: true
     
 env:
   ARTIFACT_TO_UPLOAD_PATH: $GITHUB_WORKSPACE/artifact-to-upload
@@ -16,7 +16,7 @@ runs:
     - uses: actions/download-artifact@v4
       with:
         name: WebApp
-        path: $ARTIFACT_TO_UPLOAD_PATH
+        path: env.ARTIFACT_TO_UPLOAD_PATH
 
     - uses: Azure/static-web-apps-deploy@v1
       with:
@@ -26,4 +26,4 @@ runs:
         skip_app_build: true
         skip_api_build: true
         output_location: ''
-        app_location: $ARTIFACT_TO_UPLOAD_PATH
+        app_location: env.ARTIFACT_TO_UPLOAD_PATH
