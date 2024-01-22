@@ -21,7 +21,7 @@ runs:
     - name: Copy SWA config
       shell: pwsh
       working-directory: ./src/web
-      run: cp ./staticwebapp.config.json ./src/web/dist/lander
+      run: cp ./staticwebapp.config.json ./dist/lander
 
     - uses: actions/upload-artifact@v4
       with:
