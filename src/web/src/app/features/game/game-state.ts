@@ -1,11 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import {
     Bodies,
-    Composite,
     Engine,
     World,
     Body,
-    Vertices,
     Svg,
 } from 'matter-js';
 
@@ -38,13 +36,11 @@ export class GameState implements OnDestroy {
                 isStatic: true,
                 render: {
                     fillStyle: '#894036',
-                    lineWidth: 0
+                    lineWidth: 0,
                 },
             },
             true
         );
-
-        Body.scale(terrain, 5, 5);
 
         Body.translate(terrain, {
             x: (terrain.bounds.max.x - terrain.bounds.min.x) / 2,
