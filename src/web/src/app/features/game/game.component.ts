@@ -37,6 +37,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
     @HostListener('window:resize', ['$event'])
     public onResize(evt: Event): void {
+        console.log('resize');
         this.fitToScreen();
     }
 
@@ -48,7 +49,13 @@ export class GameComponent implements OnInit, OnDestroy {
         const container = this._worldContainer.nativeElement;
         this._render.canvas.width = container.clientWidth;
         this._render.canvas.height = container.clientHeight;
-        Render.setPixelRatio(this._render, 1);
+        this._render.options.width = container.clientWidth;
+        this._render.options.height = container.clientHeight;
+        this._render.bounds.max.x = container.clientWidth;
+        this._render.bounds.max.y = container.clientHeight;
+
+        // Render.setPixelRatio(this._render, 1);
+        
         Render.lookAt(
             this._render,
             this._state.terrain,
